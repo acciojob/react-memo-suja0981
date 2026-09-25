@@ -6,8 +6,8 @@ import "../styles/App.css";
 const App = () => {
   const [todos, setTodos] = useState(["New todo"]);
   const [count, setCount] = useState(0);
-  const [skill, setSkill] = useState("");
-  const [skills, setSkills] = useState(["HTML", "CSS", "JavaScript", "React"]);
+  const [input, setInput] = useState("");
+  const [error, setError] = useState("");
 
   const addTodo = () => {
     setTodos((prev) => [...prev, "New todo"]);
@@ -19,11 +19,14 @@ const App = () => {
 
   const handleCustomSubmit = (e) => {
     if (e) e.preventDefault();
-    if (skill.length <= 5) {
+    if (input.length <= 5) {
+      alert("Task must be more than 5 characters");
+      setError("Task must be more than 5 characters");
       return;
     }
-    setSkills((prev) => [...prev, skill]);
-    setSkill("");
+    setTodos((prev) => [...prev, input]);
+    setInput("");
+    setError("");
   };
 
   return (
@@ -57,13 +60,17 @@ const App = () => {
           type="text"
           id="skill-input"
           placeholder="Enter task (> 5 chars)"
-          value={skill}
-          onChange={(e) => setSkill(e.target.value)}
+          value={input}
+          onChange={(e) => {
+            setInput(e.target.value);
+            if (error) setError("");
+          }}
         />
         <button id="skill-btn" onClick={handleCustomSubmit}>
-          Add Skill
+          Submit
         </button>
-        <ReactMemo skills={skills} />
+        {error && <p className="error" style={{ color: "red" }}>{error}</p>}
+        <ReactMemo todos={todos} />
       </div>
     </div>
   );
