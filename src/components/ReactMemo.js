@@ -1,23 +1,13 @@
 import React from "react";
 
-const ReactMemo = ({ todos }) => {
+const ReactMemo = ({ skills }) => {
   return (
-    <div>
-      <h2>My Todos</h2>
-      {todos.map((todo, index) => (
-        <p key={index}>{todo}</p>
+    <ul>
+      {skills.map((skill, index) => (
+        <li key={index}>{skill}</li>
       ))}
-    </div>
+    </ul>
   );
 };
 
 export default React.memo(ReactMemo);
-
-
-
-
-
-
-
-
-

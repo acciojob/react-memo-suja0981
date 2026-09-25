@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import ReactMemo from "./ReactMemo";
 import UseMemo from "./UseMemo";
+import ReactMemo from "./ReactMemo";
 import "../styles/App.css";
 
 const App = () => {
   const [todos, setTodos] = useState(["New todo"]);
   const [count, setCount] = useState(0);
-  const [input, setInput] = useState("");
-  const [customTasks, setCustomTasks] = useState([]);
+  const [skill, setSkill] = useState("");
+  const [skills, setSkills] = useState(["HTML", "CSS", "JavaScript", "React"]);
 
   const addTodo = () => {
     setTodos((prev) => [...prev, "New todo"]);
@@ -19,18 +19,20 @@ const App = () => {
 
   const handleCustomSubmit = (e) => {
     if (e) e.preventDefault();
-    if (input.trim().length > 5) {
-      setTodos((prev) => [...prev, input.trim()]);
-      setCustomTasks((prev) => [...prev, input.trim()]);
-      setInput("");
+    if (skill.trim().length > 5) {
+      setSkills((prev) => [...prev, skill.trim()]);
     }
+    setSkill(""); // Always clears the input field after submit
   };
 
   return (
     <div id="main">
-      <h1>React.memo</h1>
+      <h1>React.useMemo</h1>
       <div>
-        <ReactMemo todos={todos} />
+        <h2>My todos</h2>
+        {todos.map((todo, index) => (
+          <p key={index}>{todo}</p>
+        ))}
         <button id="add-todo-btn" onClick={addTodo}>
           Add Todo
         </button>
@@ -49,22 +51,18 @@ const App = () => {
       <hr />
 
       <div>
-        <h2>React.memo Input</h2>
+        <h1>React.memo</h1>
         <input
           type="text"
           id="skill-input"
           placeholder="Enter task (> 5 chars)"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          value={skill}
+          onChange={(e) => setSkill(e.target.value)}
         />
-        <button id="submit-btn" onClick={handleCustomSubmit}>
-          Submit
+        <button id="skill-btn" onClick={handleCustomSubmit}>
+          Add Skill
         </button>
-        <ul>
-          {customTasks.map((task, index) => (
-            <li key={index}>{task}</li>
-          ))}
-        </ul>
+        <ReactMemo skills={skills} />
       </div>
     </div>
   );
