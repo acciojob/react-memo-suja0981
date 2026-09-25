@@ -19,10 +19,11 @@ const App = () => {
 
   const handleCustomSubmit = (e) => {
     if (e) e.preventDefault();
-    if (skill.trim().length > 5) {
-      setSkills((prev) => [...prev, skill.trim()]);
+    if (skill.length <= 5) {
+      return;
     }
-    setSkill(""); // Always clears the input field after submit
+    setSkills((prev) => [...prev, skill]);
+    setSkill("");
   };
 
   return (
